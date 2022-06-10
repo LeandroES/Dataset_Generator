@@ -1,33 +1,45 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Random;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
+//import com.google.common.base.Function;
+//import com.google.common.collect.Lists;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.*;
 
 public class Main {
 
-    public static ArrayList<Integer> Resultado() {
+    class GFG {
+
+        // Generic function to convert List of
+        // String to List of String
+        public static <T, U> List<U>
+        convertIntListToStringList(List<T> listOfInteger,
+                                   Function<T, U> function)
+        {
+            return listOfInteger.stream()
+                    .map(function)
+                    .collect(Collectors.toList());
+        }
+    }
+    public static List<String> Resultado() {
         Random rd = new Random();
-        ArrayList<Integer> resultado = new ArrayList<Integer>();
-        for (int i = 0; i < rd.nextInt(10000, 50000); i++) {
+        List<Integer> resultado = new ArrayList<Integer>();
+        for (int i = 0; i < 100; i++) {
             resultado.add(rd.nextInt(1, 50000));
         }
-        return resultado;
+        List<String> listOfString = GFG.convertIntListToStringList(resultado, s -> String.valueOf(s));
+        return listOfString;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-        ArrayList<Integer> arraySIU = new ArrayList<Integer>(Resultado());
-        //employees.add(new Employee(0, "Jose", "Departamento A"));
-        //employees.add(new Employee(1, "Alex", "Departamento B"));
-        //employees.add(new Employee(2, "Ignacio", "Departamento C"));
-
-        FileOutputStream fout=new FileOutputStream("D:\\WorkSpaces\\Java\\Dataset_Generator\\Data\\output.txt");
-        ObjectOutputStream out= new ObjectOutputStream(fout);
-        out.writeObject(arraySIU);
-        out.close();
-
-
-        FileInputStream fin = new FileInputStream("D:\\WorkSpaces\\Java\\Dataset_Generator\\Data\\output.txt");
-        ObjectInputStream ois = new ObjectInputStream(fin);
-        ArrayList<Integer> arrayInput = (ArrayList<Integer>)ois.readObject();
-        for(Integer i : arrayInput) System.out.println(i);
+        Path output = Paths.get("D:\\WorkSpaces\\Java\\Dataset_Generator\\Data\\100.txt");
+        try {
+            Files.write(output, Resultado());
+            System.out.println(output.toFile().getAbsolutePath());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-
 }
