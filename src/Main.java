@@ -27,14 +27,14 @@ public class Main {
     public static List<String> Resultado() {
         Random rd = new Random();
         List<Integer> resultado = new ArrayList<Integer>();
-        for (int i = 0; i < 100; i++) {
-            resultado.add(rd.nextInt(1, 50000));
+        for (int i = 0; i <50000; i++) {
+            resultado.add(rd.nextInt(1, 70000));
         }
         List<String> listOfString = GFG.convertIntListToStringList(resultado, s -> String.valueOf(s));
         return listOfString;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException {
-        Path output = Paths.get("D:\\WorkSpaces\\Java\\Dataset_Generator\\Data\\100.txt");
+        Path output = Paths.get("D:\\WorkSpaces\\Java\\Dataset_Generator\\Data\\50000.txt");
         try {
             Files.write(output, Resultado());
             System.out.println(output.toFile().getAbsolutePath());
